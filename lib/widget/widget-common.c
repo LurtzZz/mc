@@ -158,21 +158,22 @@ init_widget (Widget * w, int y, int x, int lines, int cols,
 
 /* Default callback for widgets */
 cb_ret_t
-default_widget_callback (Widget * sender, widget_msg_t msg, int parm, void *data)
+widget_default_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void *data)
 {
+    (void) w;
     (void) sender;
     (void) parm;
     (void) data;
 
     switch (msg)
     {
-    case WIDGET_INIT:
-    case WIDGET_FOCUS:
-    case WIDGET_UNFOCUS:
-    case WIDGET_DRAW:
-    case WIDGET_DESTROY:
-    case WIDGET_CURSOR:
-    case WIDGET_IDLE:
+    case MSG_INIT:
+    case MSG_FOCUS:
+    case MSG_UNFOCUS:
+    case MSG_DRAW:
+    case MSG_DESTROY:
+    case MSG_CURSOR:
+    case MSG_IDLE:
         return MSG_HANDLED;
 
     default:
@@ -190,7 +191,7 @@ default_widget_callback (Widget * sender, widget_msg_t msg, int parm, void *data
  * @param enable  TRUE if specified options should be added, FALSE if options should be removed
  */
 void
-widget_default_set_options_callback (Widget *w, widget_options_t options, gboolean enable)
+widget_default_set_options_callback (Widget * w, widget_options_t options, gboolean enable)
 {
     if (enable)
         w->options |= options;
@@ -198,7 +199,7 @@ widget_default_set_options_callback (Widget *w, widget_options_t options, gboole
         w->options &= ~options;
 
     if (w->owner != NULL && (options & W_DISABLED) != 0)
-        send_message (w, NULL, WIDGET_DRAW, 0, NULL);
+        send_message (w, NULL, MSG_DRAW, 0, NULL);
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -211,7 +212,7 @@ widget_default_set_options_callback (Widget *w, widget_options_t options, gboole
  * @param enable  TRUE if specified options should be added, FALSE if options should be removed
  */
 void
-widget_set_options (Widget *w, widget_options_t options, gboolean enable)
+widget_set_options (Widget * w, widget_options_t options, gboolean enable)
 {
     w->set_options (w, options, enable);
 }
@@ -225,7 +226,7 @@ widget_set_size (Widget * widget, int y, int x, int lines, int cols)
     widget->y = y;
     widget->cols = cols;
     widget->lines = lines;
-    send_message (widget, NULL, WIDGET_RESIZED, 0, NULL);
+    send_message (widget, NULL, MSG_RESIZE, 0, NULL);
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -233,7 +234,7 @@ widget_set_size (Widget * widget, int y, int x, int lines, int cols)
 void
 widget_selectcolor (Widget * w, gboolean focused, gboolean hotkey)
 {
-    Dlg_head *h = w->owner;
+    WDialog *h = w->owner;
     int color;
 
     if ((w->options & W_DISABLED) != 0)
@@ -263,6 +264,20 @@ widget_erase (Widget * w)
 {
     if (w != NULL)
         tty_fill_region (w->y, w->x, w->lines, w->cols, ' ');
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+void
+widget_redraw (Widget * w)
+{
+    if (w != NULL)
+    {
+        WDialog *h = w->owner;
+
+        if (h != NULL && h->state == DLG_ACTIVE)
+            w->callback (w, NULL, MSG_DRAW, 0, NULL);
+    }
 }
 
 /* --------------------------------------------------------------------------------------------- */

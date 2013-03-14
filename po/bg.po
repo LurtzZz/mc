@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2012-09-03 10:08+0400\n"
-"PO-Revision-Date: 2012-09-03 08:41+0000\n"
+"POT-Creation-Date: 2013-03-12 13:28+0400\n"
+"PO-Revision-Date: 2012-12-26 08:42+0000\n"
 "Last-Translator: Yasen Pramatarov <yasen@lindeas.com>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/projects/p/mc/language/"
 "bg/)\n"
@@ -74,7 +74,7 @@ msgid "FATAL: not a directory:"
 msgstr ""
 
 #, c-format
-msgid "An error occured while migrating user settings: %s"
+msgid "An error occurred while migrating user settings: %s"
 msgstr ""
 
 #, c-format
@@ -516,14 +516,14 @@ msgstr "Да"
 msgid "&No"
 msgstr "Не"
 
-msgid "Background process:"
-msgstr "Фонов процес:"
+msgid "&OK"
+msgstr "&ОК"
 
 msgid "&Cancel"
 msgstr "О&тказ"
 
-msgid "&OK"
-msgstr "&ОК"
+msgid "Background process:"
+msgstr "Фонов процес:"
 
 msgid "Error"
 msgstr "Грешка"
@@ -699,20 +699,20 @@ msgstr ""
 msgid "&Dismiss"
 msgstr "&Отмяна"
 
-msgid "&All charsets"
-msgstr ""
-
-msgid "&Whole words"
-msgstr "&Цели думи"
-
-msgid "&Backwards"
-msgstr "&Назад"
+msgid "Enter search string:"
+msgstr "Въведете низ за търсене:"
 
 msgid "Cas&e sensitive"
 msgstr "Чувствителност към &регистъра"
 
-msgid "Enter search string:"
-msgstr "Въведете низ за търсене:"
+msgid "&Backwards"
+msgstr "&Назад"
+
+msgid "&Whole words"
+msgstr "&Цели думи"
+
+msgid "&All charsets"
+msgstr ""
 
 msgid "Search"
 msgstr "Търсене"
@@ -745,25 +745,25 @@ msgstr ""
 msgid "&Minimal (Find a smaller set of change)"
 msgstr ""
 
-msgid "Strip &trailing carriage return"
+msgid "Diff algorithm"
 msgstr ""
 
-msgid "Ignore all &whitespace"
-msgstr ""
-
-msgid "Ignore &space change"
-msgstr ""
-
-msgid "Ignore tab &expansion"
+msgid "Diff extra options"
 msgstr ""
 
 msgid "&Ignore case"
 msgstr "Пренебрегване на &регистъра"
 
-msgid "Diff extra options"
+msgid "Ignore tab &expansion"
 msgstr ""
 
-msgid "Diff algorithm"
+msgid "Ignore &space change"
+msgstr ""
+
+msgid "Ignore all &whitespace"
+msgstr ""
+
+msgid "Strip &trailing carriage return"
 msgstr ""
 
 msgid "Diff Options"
@@ -908,11 +908,11 @@ msgstr "Формат за &Windows/DOS (CR LF)"
 msgid "&Macintosh format (CR)"
 msgstr "Формат за &Macintosh (CR)"
 
-msgid "Change line breaks to:"
-msgstr "Преобразуване на новите редове към:"
-
 msgid "Enter file name:"
 msgstr "Въведете име на файл:"
+
+msgid "Change line breaks to:"
+msgstr "Преобразуване на новите редове към:"
 
 msgid "Save As"
 msgstr "Запазване като"
@@ -1088,17 +1088,17 @@ msgstr "Външна команда"
 msgid "Cannot execute command"
 msgstr "Грешка при изпълнение на команда"
 
-msgid "Copies to"
-msgstr "Копие до"
-
-msgid "Subject"
-msgstr "Относно"
+msgid "mail -s <subject> -c <cc> <to>"
+msgstr ""
 
 msgid "To"
 msgstr "До"
 
-msgid "mail -s <subject> -c <cc> <to>"
-msgstr ""
+msgid "Subject"
+msgstr "Относно"
+
+msgid "Copies to"
+msgstr "Копие до"
 
 msgid "Mail"
 msgstr ""
@@ -1117,11 +1117,26 @@ msgstr ""
 msgid "In se&lection"
 msgstr ""
 
+msgid "&Find all"
+msgstr ""
+
 msgid "Enter replacement string:"
 msgstr ""
 
-msgid "&Find all"
-msgstr ""
+msgid "Replace with:"
+msgstr "Замяна с:"
+
+msgid "&Replace"
+msgstr "Замести"
+
+msgid "A&ll"
+msgstr "Всички"
+
+msgid "&Skip"
+msgstr "Пропусни"
+
+msgid "Confirm replace"
+msgstr "Потвърждаване замяната"
 
 msgid "Cancel"
 msgstr "Отказ"
@@ -1130,21 +1145,6 @@ msgid ""
 "Current text was modified without a file save.\n"
 "Continue discards these changes."
 msgstr ""
-
-msgid "&Skip"
-msgstr "Пропусни"
-
-msgid "A&ll"
-msgstr "Всички"
-
-msgid "&Replace"
-msgstr "Замести"
-
-msgid "Replace with:"
-msgstr "Замяна с:"
-
-msgid "Confirm replace"
-msgstr "Потвърждаване замяната"
 
 msgid "NoName"
 msgstr ""
@@ -1368,72 +1368,82 @@ msgstr ""
 msgid "&Options"
 msgstr "&Настройки"
 
-msgid "None"
-msgstr "Няма"
-
-msgid "Dynamic paragraphing"
-msgstr "Динамични абзаци"
-
-msgid "Type writer wrap"
-msgstr "Пишеща машина"
-
-msgid "Word wrap line length:"
+msgid "&None"
 msgstr ""
 
-msgid "&Group undo"
+msgid "&Dynamic paragraphing"
 msgstr ""
 
-msgid "Cursor beyond end of line"
+msgid "Type &writer wrap"
 msgstr ""
 
-msgid "Pers&istent selection"
+msgid "Wrap mode"
+msgstr "Режим на пренасяне"
+
+msgid "Tabulation"
+msgstr ""
+
+msgid "&Fake half tabs"
+msgstr "Фалшиви полу-tab-ове"
+
+msgid "&Backspace through tabs"
+msgstr "Backspace между tab-овете"
+
+msgid "Fill tabs with &spaces"
+msgstr "Tab-овете са интервали"
+
+msgid "Tab spacing:"
+msgstr ""
+
+msgid "Other options"
+msgstr "Други настройки"
+
+msgid "&Return does autoindent"
+msgstr "Return спазва полето"
+
+msgid "Confir&m before saving"
+msgstr "Питай преди запазване"
+
+msgid "Save file &position"
+msgstr ""
+
+msgid "&Visible trailing spaces"
+msgstr ""
+
+msgid "Visible &tabs"
 msgstr ""
 
 msgid "Synta&x highlighting"
 msgstr "Осветяване на синтаксиса"
 
-msgid "Visible tabs"
-msgstr "Видими табулации"
-
-msgid "Visible trailing spaces"
-msgstr "Видими интервали в края"
-
-msgid "Save file &position"
+msgid "C&ursor after inserted block"
 msgstr ""
 
-msgid "Confir&m before saving"
-msgstr "Питай преди запазване"
-
-msgid "&Return does autoindent"
-msgstr "Return спазва полето"
-
-msgid "Tab spacing:"
+msgid "Pers&istent selection"
 msgstr ""
 
-msgid "Fill tabs with &spaces"
-msgstr "Tab-овете са интервали"
+msgid "Cursor be&yond end of line"
+msgstr ""
 
-msgid "&Backspace through tabs"
-msgstr "Backspace между tab-овете"
+msgid "&Group undo"
+msgstr ""
 
-msgid "&Fake half tabs"
-msgstr "Фалшиви полу-tab-ове"
-
-msgid "Wrap mode"
-msgstr "Режим на пренасяне"
+msgid "Word wrap line length:"
+msgstr ""
 
 msgid "Editor options"
 msgstr "Настройки на редактора"
 
+msgid ""
+"A user friendly text editor\n"
+"written for the Midnight Commander."
+msgstr ""
+
+msgid "Copyright (C) 1996-2012 the Free Software Foundation"
+msgstr ""
+
 msgid "About"
 msgstr "Относно"
-
-msgid ""
-"Copyright (C) 1996-2012 the Free Software Foundation\n"
-"\n"
-"            A user friendly text editor\n"
-"         written for the Midnight Commander"
-msgstr ""
 
 msgid "Open files"
 msgstr ""
@@ -1497,6 +1507,10 @@ msgid ""
 "extra access permissions with the \"su\" command?"
 msgstr ""
 
+#, c-format
+msgid "Cannot fetch a local copy of %s"
+msgstr ""
+
 msgid "The shell is already running a command"
 msgstr "Обвивката вече изпълнява команда"
 
@@ -1504,18 +1518,14 @@ msgstr "Обвивката вече изпълнява команда"
 msgid "Type `exit' to return to the Midnight Commander"
 msgstr "Напишете `exit', за да се върнете в Midnight Commander"
 
-#, c-format
-msgid "Cannot fetch a local copy of %s"
-msgstr ""
-
-msgid "&Set"
-msgstr "Промени"
+msgid "Set &all"
+msgstr "Прм всич"
 
 msgid "S&kip"
 msgstr "Пропусни"
 
-msgid "Set &all"
-msgstr "Прм всич"
+msgid "&Set"
+msgstr "Промени"
 
 msgid "owner"
 msgstr "собст."
@@ -1526,18 +1536,8 @@ msgstr "група"
 msgid "other"
 msgstr "други"
 
-msgid "On"
-msgstr "За"
-
 msgid "Flag"
 msgstr "Флаг"
-
-msgid "Mode"
-msgstr "Режим"
-
-#, c-format
-msgid "%6d of %d"
-msgstr "%6d от %d"
 
 msgid "Chown advanced command"
 msgstr ""
@@ -1554,14 +1554,164 @@ msgid ""
 "%s"
 msgstr ""
 
-msgid "&Stop"
-msgstr "Спри"
+msgid "Other 8 bit"
+msgstr "Други 8 бита"
 
-msgid "&Resume"
-msgstr "Продължи"
+msgid "Running"
+msgstr ""
 
-msgid "&Kill"
-msgstr "Убий"
+msgid "Stopped"
+msgstr "Спрян"
+
+msgid "&Never"
+msgstr "Никога"
+
+msgid "On dum&b terminals"
+msgstr ""
+
+msgid "Alwa&ys"
+msgstr "Винаги"
+
+msgid "File operations"
+msgstr ""
+
+msgid "&Verbose operation"
+msgstr "Детайли при операции"
+
+msgid "Compute tota&ls"
+msgstr ""
+
+msgid "Classic pro&gressbar"
+msgstr ""
+
+msgid "Mkdi&r autoname"
+msgstr ""
+
+msgid "&Preallocate space"
+msgstr ""
+
+msgid "Esc key mode"
+msgstr ""
+
+msgid "S&ingle press"
+msgstr ""
+
+msgid "Timeout:"
+msgstr "Изчакване:"
+
+msgid "Pause after run"
+msgstr ""
+
+msgid "Use internal edi&t"
+msgstr ""
+
+msgid "Use internal vie&w"
+msgstr ""
+
+#, fuzzy
+msgid "A&sk new file name"
+msgstr "Въведете име на файл:"
+
+msgid "Auto m&enus"
+msgstr ""
+
+msgid "&Drop down menus"
+msgstr "Падащи менюта"
+
+#, fuzzy
+msgid "S&hell patterns"
+msgstr "Mетасимволи на обвивката"
+
+msgid "Co&mplete: show all"
+msgstr ""
+
+msgid "Rotating d&ash"
+msgstr ""
+
+msgid "Cd follows lin&ks"
+msgstr ""
+
+msgid "Sa&fe delete"
+msgstr ""
+
+msgid "A&uto save setup"
+msgstr ""
+
+msgid "Configure options"
+msgstr "Опции на конфигурацията"
+
+msgid "Case &insensitive"
+msgstr ""
+
+msgid "Use panel sort mo&de"
+msgstr ""
+
+msgid "Show mi&ni-status"
+msgstr ""
+
+msgid "Use SI si&ze units"
+msgstr ""
+
+msgid "Mi&x all files"
+msgstr ""
+
+msgid "Show &backup files"
+msgstr ""
+
+msgid "Show &hidden files"
+msgstr ""
+
+msgid "&Fast dir reload"
+msgstr "Бързо опресняване"
+
+msgid "Ma&rk moves down"
+msgstr ""
+
+msgid "Re&verse files only"
+msgstr ""
+
+msgid "Simple s&wap"
+msgstr ""
+
+msgid "A&uto save panels setup"
+msgstr ""
+
+msgid "Navigation"
+msgstr ""
+
+msgid "L&ynx-like motion"
+msgstr "Движение като lynx"
+
+msgid "Pa&ge scrolling"
+msgstr ""
+
+msgid "&Mouse page scrolling"
+msgstr ""
+
+msgid "File highlight"
+msgstr ""
+
+msgid "File &types"
+msgstr ""
+
+msgid "&Permissions"
+msgstr ""
+
+msgid "Quick search"
+msgstr "Бързо търсене"
+
+msgid "Panel options"
+msgstr "Настройки на панел"
+
+msgid "Information"
+msgstr "Данни"
+
+msgid ""
+"Using the fast reload option may not reflect the exact\n"
+"directory contents. In this case you'll need to do a\n"
+"manual reload of the directory. See the man page for\n"
+"the details."
+msgstr ""
 
 msgid "&Full file list"
 msgstr "Пълен файлов списък"
@@ -1575,14 +1725,57 @@ msgstr "Дълъг файлов списък"
 msgid "&User defined:"
 msgstr "Дефиниран от потребителя:"
 
-msgid "Listing mode"
-msgstr "Режим на списък"
-
 msgid "User &mini status"
 msgstr ""
 
-msgid "Other 8 bit"
-msgstr "Други 8 бита"
+msgid "Listing mode"
+msgstr "Режим на списък"
+
+msgid "Executable &first"
+msgstr ""
+
+msgid "&Reverse"
+msgstr "Обратен ред"
+
+msgid "Sort order"
+msgstr "Ред на сортиране"
+
+#. TRANSLATORS: no need to translate 'Confirmation', it's just a context prefix
+msgid "Confirmation|&Delete"
+msgstr "Потвърждение|Из&триване"
+
+msgid "Confirmation|O&verwrite"
+msgstr "Потвърждение|Презапи&сване"
+
+msgid "Confirmation|&Execute"
+msgstr "Потвърждение|Из&пълнение"
+
+msgid "Confirmation|E&xit"
+msgstr "Потвърждение|И&зход"
+
+msgid "Confirmation|Di&rectory hotlist delete"
+msgstr "Потвърждение|Изтриване на &бързите папки"
+
+msgid "Confirmation|&History cleanup"
+msgstr "Потвърждение|&Изчистване на историята"
+
+msgid "Confirmation"
+msgstr "Потвърждение"
+
+msgid "&UTF-8 output"
+msgstr ""
+
+msgid "&Full 8 bits output"
+msgstr ""
+
+msgid "&ISO 8859-1"
+msgstr ""
+
+msgid "7 &bits"
+msgstr ""
+
+msgid "F&ull 8 bits input"
+msgstr "Чети всичките 8 бита"
 
 msgid "Display bits"
 msgstr ""
@@ -1590,91 +1783,32 @@ msgstr ""
 msgid "Input / display codepage:"
 msgstr "Вход / дисплей кодова страница:"
 
-msgid "F&ull 8 bits input"
-msgstr "Чети всичките 8 бита"
-
 msgid "&Select"
 msgstr "Маркирай"
-
-msgid "Running"
-msgstr ""
-
-msgid "Stopped"
-msgstr "Спрян"
-
-msgid "&Reverse"
-msgstr "Обратен ред"
-
-msgid "Case sensi&tive"
-msgstr ""
-
-msgid "Executable &first"
-msgstr ""
-
-msgid "Sort order"
-msgstr "Ред на сортиране"
-
-msgid "Confirmation"
-msgstr "Потвърждение"
-
-#. TRANSLATORS: no need to translate 'Confirmation', it's just a context prefix
-#. 2
-msgid "Confirmation|&History cleanup"
-msgstr "Потвърждение|&Изчистване на историята"
-
-msgid "Confirmation|Di&rectory hotlist delete"
-msgstr "Потвърждение|Изтриване на &бързите папки"
-
-msgid "Confirmation|E&xit"
-msgstr "Потвърждение|И&зход"
-
-msgid "Confirmation|&Execute"
-msgstr "Потвърждение|Из&пълнение"
-
-msgid "Confirmation|O&verwrite"
-msgstr "Потвърждение|Презапи&сване"
-
-msgid "Confirmation|&Delete"
-msgstr "Потвърждение|Из&триване"
-
-msgid "UTF-8 output"
-msgstr ""
-
-msgid "Full 8 bits output"
-msgstr "Показвай 8 бита"
-
-msgid "ISO 8859-1"
-msgstr "ISO 8859-1"
-
-msgid "7 bits"
-msgstr "7 бита"
 
 msgid "Directory tree"
 msgstr ""
 
-msgid "Use passive mode over pro&xy"
+msgid "Timeout for freeing VFSs (sec):"
 msgstr ""
 
-msgid "Use &passive mode"
+msgid "FTP anonymous password:"
+msgstr ""
+
+msgid "FTP directory cache timeout (sec):"
+msgstr ""
+
+msgid "&Always use ftp proxy:"
 msgstr ""
 
 msgid "&Use ~/.netrc"
 msgstr "&Използване на ~/.netrc"
 
-msgid "&Always use ftp proxy"
-msgstr "Винаги използвай прокси за ftp"
+msgid "Use &passive mode"
+msgstr ""
 
-msgid "sec"
-msgstr "сек"
-
-msgid "ftpfs directory cache timeout:"
-msgstr "Живот на кеша на ftpfs:"
-
-msgid "ftp anonymous password:"
-msgstr "Парола за анонимно ftp:"
-
-msgid "Timeout for freeing VFSs:"
-msgstr "Време за освобождаване на ВФС:"
+msgid "Use passive mode over pro&xy"
+msgstr ""
 
 msgid "Virtual File System Setting"
 msgstr ""
@@ -1685,17 +1819,30 @@ msgstr "cd"
 msgid "Quick cd"
 msgstr "Бързо cd"
 
-msgid "Symbolic link filename:"
-msgstr "Име на връзката:"
-
 msgid "Existing filename (filename symlink will point to):"
 msgstr "Съществуващо име (към което ще сочи връзката):"
+
+msgid "Symbolic link filename:"
+msgstr "Име на връзката:"
 
 msgid "Symbolic link"
 msgstr "Връзка"
 
-msgid "Background Jobs"
-msgstr "Фонови процеси"
+msgid "&Stop"
+msgstr "Спри"
+
+msgid "&Resume"
+msgstr "Продължи"
+
+msgid "&Kill"
+msgstr "Убий"
+
+msgid "Background jobs"
+msgstr ""
+
+#, c-format
+msgid "Password for \\\\%s\\%s"
+msgstr "Парола за \\\\%s\\%s"
 
 msgid "Domain:"
 msgstr "Домейн:"
@@ -1703,45 +1850,44 @@ msgstr "Домейн:"
 msgid "Username:"
 msgstr "Потребителско име:"
 
-#, c-format
-msgid "Password for \\\\%s\\%s"
-msgstr "Парола за \\\\%s\\%s"
+msgid "SMB authentication"
+msgstr ""
 
-msgid "execute/search by others"
-msgstr "изпълн/търсене от други"
+msgid "set &user ID on execution"
+msgstr ""
 
-msgid "write by others"
-msgstr "запис от други"
+msgid "set &group ID on execution"
+msgstr ""
 
-msgid "read by others"
-msgstr "четене от други"
+msgid "stick&y bit"
+msgstr ""
 
-msgid "execute/search by group"
-msgstr "изпълн/търсене от групата"
+msgid "&read by owner"
+msgstr ""
 
-msgid "write by group"
-msgstr "запис от групата"
+msgid "&write by owner"
+msgstr ""
 
-msgid "read by group"
-msgstr "четене от групата"
+msgid "e&xecute/search by owner"
+msgstr ""
 
-msgid "execute/search by owner"
-msgstr "изплн/трсн от собственика"
+msgid "rea&d by group"
+msgstr ""
 
-msgid "write by owner"
-msgstr "запис от собственика"
+msgid "write by grou&p"
+msgstr ""
 
-msgid "read by owner"
-msgstr "четене от собственика"
+msgid "execu&te/search by group"
+msgstr ""
 
-msgid "sticky bit"
-msgstr "лепкав бит"
+msgid "read &by others"
+msgstr ""
 
-msgid "set group ID on execution"
-msgstr "установи GID при изпълн."
+msgid "wr&ite by others"
+msgstr ""
 
-msgid "set user ID on execution"
-msgstr "установи UID при изпълн."
+msgid "execute/searc&h by others"
+msgstr ""
 
 msgid "Name:"
 msgstr "Име:"
@@ -1755,29 +1901,29 @@ msgstr "Име на собственик:"
 msgid "Group name:"
 msgstr "Име на група:"
 
-msgid "C&lear marked"
-msgstr "Изтр марк"
+msgid "&Marked all"
+msgstr "Само марк"
 
 msgid "S&et marked"
 msgstr "Уст марк"
 
-msgid "&Marked all"
-msgstr "Само марк"
+msgid "C&lear marked"
+msgstr "Изтр марк"
 
 msgid "Chmod command"
 msgstr "Команда Chmod"
 
-msgid "File"
-msgstr "Файл"
-
 msgid "Permission"
 msgstr "Режим"
 
-msgid "Set &users"
-msgstr "Уст потрб"
+msgid "File"
+msgstr "Файл"
 
 msgid "Set &groups"
 msgstr "Уст групи"
+
+msgid "Set &users"
+msgstr "Уст потрб"
 
 msgid "Name"
 msgstr "Име"
@@ -1794,14 +1940,14 @@ msgstr "Размер"
 msgid "Chown command"
 msgstr ""
 
+msgid "User name"
+msgstr "Потребителско име"
+
 msgid "<Unknown user>"
 msgstr "<Неизвестен>"
 
 msgid "<Unknown group>"
 msgstr "<Неизвестна>"
-
-msgid "User name"
-msgstr "Потребителско име"
 
 msgid "Enter machine name (F1 for details):"
 msgstr ""
@@ -1818,14 +1964,14 @@ msgstr ""
 msgid "Set expression for filtering filenames"
 msgstr ""
 
+msgid "&Files only"
+msgstr "Само &файлове"
+
 msgid "&Using shell patterns"
 msgstr "Mетасимволи на обвивката"
 
 msgid "&Case sensitive"
 msgstr "Чувствителност към &регистъра"
-
-msgid "&Files only"
-msgstr "Само &файлове"
 
 #, c-format
 msgid "Link %s to:"
@@ -1857,6 +2003,10 @@ msgstr ""
 
 msgid "Filter command and arguments:"
 msgstr ""
+
+#, fuzzy
+msgid "Edit file"
+msgstr "Редактирай меню-файл"
 
 msgid "Create a new Directory"
 msgstr " Създай нова директория "
@@ -2084,20 +2234,18 @@ msgstr ""
 msgid "&Retry"
 msgstr "Отново"
 
+#, c-format
 msgid ""
-"\n"
-"Directory not empty.\n"
+"Directory \"%s\" not empty.\n"
 "Delete it recursively?"
 msgstr ""
 
+#, c-format
 msgid ""
-"\n"
-"Background process: Directory not empty.\n"
+"Background process:\n"
+"Directory \"%s\" not empty.\n"
 "Delete it recursively?"
 msgstr ""
-
-msgid "Delete:"
-msgstr "Изтриване:"
 
 msgid "Non&e"
 msgstr "никой"
@@ -2307,11 +2455,23 @@ msgstr ""
 msgid "Directory scanning"
 msgstr ""
 
+#, c-format
+msgid ""
+"%s\n"
+"Directories: %zd, total size: %s"
+msgstr ""
+
 msgid "Cannot operate on \"..\"!"
 msgstr ""
 
 msgid "Sorry, I could not put the job in background"
 msgstr ""
+
+msgid "S&uspend"
+msgstr ""
+
+msgid "Con&tinue"
+msgstr "Продължи"
 
 #, c-format
 msgid "%d:%02d.%02d"
@@ -2337,30 +2497,30 @@ msgid "Target file already exists!"
 msgstr ""
 
 #, c-format
-msgid "Source date: %s, size %llu"
+msgid "New     : %s, size %s"
 msgstr ""
 
 #, c-format
-msgid "Target date: %s, size %llu"
+msgid "Existing: %s, size %s"
 msgstr ""
 
-msgid "If &size differs"
-msgstr "при различен размер"
-
-msgid "&Update"
-msgstr "Обнови"
-
-msgid "Overwrite all targets?"
-msgstr "Да презапиша ли всички?"
-
-msgid "&Reget"
-msgstr "Препрочитане"
+msgid "Overwrite this target?"
+msgstr "Да презапиша ли този?"
 
 msgid "A&ppend"
 msgstr "добави"
 
-msgid "Overwrite this target?"
-msgstr "Да презапиша ли този?"
+msgid "&Reget"
+msgstr "Препрочитане"
+
+msgid "Overwrite all targets?"
+msgstr "Да презапиша ли всички?"
+
+msgid "&Update"
+msgstr "Обнови"
+
+msgid "If &size differs"
+msgstr "при различен размер"
 
 msgid "File exists"
 msgstr "Файлът съществува"
@@ -2409,30 +2569,24 @@ msgstr "Назначение"
 msgid "Deleting"
 msgstr "Изтривам"
 
-msgid "&Background"
-msgstr "Във фон"
-
-msgid "&Stable Symlinks"
-msgstr "Стабилни връзки"
-
-msgid "Di&ve into subdir if exists"
+msgid "Follow &links"
 msgstr ""
 
 msgid "Preserve &attributes"
 msgstr ""
 
-msgid "Follow &links"
+msgid "Di&ve into subdir if exists"
 msgstr ""
+
+msgid "&Stable symlinks"
+msgstr ""
+
+msgid "&Background"
+msgstr "Във фон"
 
 #, c-format
 msgid "Invalid source pattern `%s'"
 msgstr ""
-
-msgid "&Suspend"
-msgstr "Спри"
-
-msgid "Con&tinue"
-msgstr "Продължи"
 
 msgid "&Chdir"
 msgstr "Смени директорията"
@@ -2456,11 +2610,17 @@ msgstr ""
 msgid "Malformed regular expression"
 msgstr "Неправилен регулярен израз"
 
+msgid "File name:"
+msgstr ""
+
 msgid "&Find recursively"
 msgstr ""
 
 msgid "S&kip hidden"
 msgstr "Пропускане на &скритите"
+
+msgid "Content:"
+msgstr "Съдържание:"
 
 msgid "Sea&rch for content"
 msgstr ""
@@ -2468,10 +2628,10 @@ msgstr ""
 msgid "Case sens&itive"
 msgstr ""
 
-msgid "Fir&st hit"
+msgid "A&ll charsets"
 msgstr ""
 
-msgid "A&ll charsets"
+msgid "Fir&st hit"
 msgstr ""
 
 msgid "&Tree"
@@ -2480,17 +2640,11 @@ msgstr "Дърво"
 msgid "Find File"
 msgstr "Търси файл"
 
-msgid "Content:"
-msgstr "Съдържание:"
-
-msgid "File name:"
-msgstr ""
+msgid "Start at:"
+msgstr "Започни от:"
 
 msgid "Ena&ble ignore directories:"
 msgstr ""
-
-msgid "Start at:"
-msgstr "Започни от:"
 
 #, c-format
 msgid "Grepping in %s"
@@ -2512,35 +2666,32 @@ msgstr "Търся %s"
 msgid "Searching"
 msgstr "Търся"
 
-msgid "&Remove"
-msgstr "Изтрий"
-
-msgid "&Append"
-msgstr "Добави"
-
-msgid "&Insert"
-msgstr "Вмъкни"
-
-msgid "New &entry"
+msgid "Change &to"
 msgstr ""
 
-msgid "New &group"
+msgid "&Free VFSs now"
 msgstr ""
-
-msgid "&Up"
-msgstr "Горе"
-
-msgid "&Add current"
-msgstr "Добави текущата"
 
 msgid "&Refresh"
 msgstr "&Обновяване"
 
-msgid "Fr&ee VFSs now"
-msgstr "Освободи ВФС-тата"
+msgid "&Add current"
+msgstr "Добави текущата"
 
-msgid "Change &to"
+msgid "&Up"
+msgstr "Горе"
+
+msgid "New &group"
 msgstr ""
+
+msgid "New &entry"
+msgstr ""
+
+msgid "&Insert"
+msgstr "Вмъкни"
+
+msgid "&Remove"
+msgstr "Изтрий"
 
 msgid "Subgroup - press ENTER to see list"
 msgstr "Подгрупа - натиснете ENTER за списък"
@@ -2551,15 +2702,21 @@ msgstr "Активни ВФС директории"
 msgid "Directory hotlist"
 msgstr "Горещи директории"
 
+msgid "Top level group"
+msgstr ""
+
 msgid "Directory path"
 msgstr "Път"
-
-msgid "Directory label"
-msgstr "Име"
 
 #, c-format
 msgid "Moving %s"
 msgstr "Премествам %s"
+
+msgid "Directory label"
+msgstr "Име"
+
+msgid "&Append"
+msgstr "Добави"
 
 msgid "New hotlist entry"
 msgstr "Нов запис"
@@ -2586,9 +2743,6 @@ msgid ""
 "Remove it?"
 msgstr ""
 
-msgid "Top level group"
-msgstr ""
-
 msgid "Hotlist Load"
 msgstr ""
 
@@ -2604,9 +2758,6 @@ msgstr "Име за \"%s\":"
 
 msgid "Add to hotlist"
 msgstr ""
-
-msgid "Information"
-msgstr "Данни"
 
 #, c-format
 msgid "Midnight Commander %s"
@@ -2687,35 +2838,32 @@ msgstr "Режим:        %s (%04o)"
 msgid "Location:  %Xh:%Xh"
 msgstr "Разположен:   %Xh:%Xh"
 
-msgid "Show free sp&ace"
+msgid "&Equal split"
+msgstr "По равно"
+
+msgid "&Menubar visible"
 msgstr ""
 
-msgid "&XTerm window title"
-msgstr ""
-
-msgid "H&intbar visible"
+msgid "Command &prompt"
 msgstr ""
 
 msgid "&Keybar visible"
 msgstr "Видими F-ове"
 
-msgid "Command &prompt"
+msgid "H&intbar visible"
 msgstr ""
 
-msgid "Menu&bar visible"
+msgid "&XTerm window title"
 msgstr ""
 
-msgid "&Equal split"
-msgstr "По равно"
+msgid "&Show free space"
+msgstr ""
 
 msgid "Panel split"
 msgstr ""
 
 msgid "Console output"
 msgstr ""
-
-msgid "Other options"
-msgstr "Други настройки"
 
 msgid "&Vertical"
 msgstr "Вертикално"
@@ -2939,151 +3087,6 @@ msgstr ""
 msgid "Memory exhausted!"
 msgstr ""
 
-msgid "&Never"
-msgstr "Никога"
-
-msgid "On dum&b terminals"
-msgstr ""
-
-msgid "Alwa&ys"
-msgstr "Винаги"
-
-msgid "A&uto save setup"
-msgstr ""
-
-msgid "Sa&fe delete"
-msgstr ""
-
-msgid "Cd follows lin&ks"
-msgstr ""
-
-msgid "Rotating d&ash"
-msgstr ""
-
-msgid "Co&mplete: show all"
-msgstr ""
-
-msgid "Shell &patterns"
-msgstr ""
-
-msgid "&Drop down menus"
-msgstr "Падащи менюта"
-
-msgid "Auto m&enus"
-msgstr ""
-
-msgid "Use internal vie&w"
-msgstr ""
-
-msgid "Use internal edi&t"
-msgstr ""
-
-msgid "Pause after run"
-msgstr ""
-
-msgid "Timeout:"
-msgstr "Изчакване:"
-
-msgid "S&ingle press"
-msgstr ""
-
-msgid "Esc key mode"
-msgstr ""
-
-msgid "Preallocate &space"
-msgstr ""
-
-msgid "Mkdi&r autoname"
-msgstr ""
-
-msgid "Classic pro&gressbar"
-msgstr ""
-
-msgid "Compute tota&ls"
-msgstr ""
-
-msgid "&Verbose operation"
-msgstr "Детайли при операции"
-
-msgid "File operation options"
-msgstr "Настройки за действия с файлове"
-
-msgid "Configure options"
-msgstr "Опции на конфигурацията"
-
-msgid "Case &insensitive"
-msgstr ""
-
-msgid "Case s&ensitive"
-msgstr ""
-
-msgid "Use panel sort mo&de"
-msgstr ""
-
-msgid "Quick search"
-msgstr "Бързо търсене"
-
-msgid "&Permissions"
-msgstr ""
-
-msgid "File &types"
-msgstr ""
-
-msgid "File highlight"
-msgstr ""
-
-msgid "&Mouse page scrolling"
-msgstr ""
-
-msgid "Pa&ge scrolling"
-msgstr ""
-
-msgid "L&ynx-like motion"
-msgstr "Движение като lynx"
-
-msgid "Navigation"
-msgstr ""
-
-msgid "A&uto save panels setup"
-msgstr ""
-
-msgid "Simple s&wap"
-msgstr ""
-
-msgid "Re&verse files only"
-msgstr ""
-
-msgid "Ma&rk moves down"
-msgstr ""
-
-msgid "&Fast dir reload"
-msgstr "Бързо опресняване"
-
-msgid "Show &hidden files"
-msgstr ""
-
-msgid "Show &backup files"
-msgstr ""
-
-msgid "Mi&x all files"
-msgstr ""
-
-msgid "Use SI si&ze units"
-msgstr ""
-
-msgid "Show mi&ni-status"
-msgstr ""
-
-msgid "Panel options"
-msgstr "Настройки на панел"
-
-msgid ""
-"Using the fast reload option may not reflect the exact\n"
-"directory contents. In this case you'll need to do a\n"
-"manual reload of the directory. See the man page for\n"
-"the details."
-msgstr ""
-
 #. TRANSLATORS: one single character to represent 'unsorted' sort mode
 #. TRANSLATORS: no need to translate 'sort', it's just a context prefix
 msgid "sort|u"
@@ -3113,8 +3116,8 @@ msgstr "&Версия"
 msgid "sort|e"
 msgstr ""
 
-msgid "&Extension"
-msgstr "Разширение"
+msgid "E&xtension"
+msgstr ""
 
 #. TRANSLATORS: one single character to represent 'size' sort mode
 #. TRANSLATORS: no need to translate 'sort', it's just a context prefix
@@ -3222,11 +3225,11 @@ msgstr "Добави нов"
 msgid "External panelize"
 msgstr "Команда в панел"
 
-msgid "Command"
-msgstr "Команда"
-
 msgid "Other command"
 msgstr "Друга команда"
+
+msgid "Command"
+msgstr "Команда"
 
 msgid "Add to external panelize"
 msgstr ""
@@ -3427,14 +3430,11 @@ msgstr ""
 "Страхотно! Имате пълна терминална база данни!\n"
 "Всичките Ви клавиши работят добре."
 
-msgid "Press all the keys mentioned here. After you have done it, check"
-msgstr "Натиснете всички клавиши показани тук. След като го направите"
-
-msgid "which keys are not marked with OK.  Press space on the missing"
-msgstr "проверете кои не са маркирани с OK. Натиснете интервал на липсващите"
-
-msgid "key, or click with the mouse to define it. Move around with Tab."
-msgstr "или ги щракнете с мишката, за да ги дефинирате. Движете се с Tab."
+msgid ""
+"Press all the keys mentioned here. After you have done it, check\n"
+"which keys are not marked with OK. Press space on the missing\n"
+"key, or click with the mouse to define it. Move around with Tab."
+msgstr ""
 
 #, c-format
 msgid ""
@@ -3546,6 +3546,9 @@ msgstr "Папка с настройки:"
 
 msgid "Data directory:"
 msgstr "Папка с данни:"
+
+msgid "File extension handlers:"
+msgstr ""
 
 msgid "VFS plugins and scripts:"
 msgstr ""
@@ -3663,9 +3666,6 @@ msgstr "fish: запис на %s: изпращам командата..."
 
 msgid "fish: Local read failed, sending zeros"
 msgstr "fish: Локалното четене пропадна, изпращам нули"
-
-msgid "fish: storing zeros"
-msgstr "fish: запис на нули"
 
 msgid "fish: storing file"
 msgstr "fish: запис на файл"
@@ -3803,7 +3803,7 @@ msgstr ""
 "%s\n"
 
 #, c-format
-msgid "sftp: an error occured while reading %s: %s"
+msgid "sftp: an error occurred while reading %s: %s"
 msgstr ""
 
 msgid "sftp: Unable to get current user name."
@@ -4073,3 +4073,6 @@ msgstr "Търсенето приключи"
 
 msgid "Continue from beginning?"
 msgstr "Да се продължи ли от началото?"
+
+msgid "Cannot fetch a local copy of /ftp://some.host/editme.txt"
+msgstr ""

@@ -142,6 +142,24 @@ exec_get_file_name (const vfs_path_t * filename_vpath)
 }
 
 /* --------------------------------------------------------------------------------------------- */
+static char *
+exec_expand_format (char symbol, gboolean is_result_quoted)
+{
+    char *text;
+
+    text = expand_format (NULL, symbol, TRUE);
+    if (is_result_quoted && text != NULL)
+    {
+        char *quoted_text;
+
+        quoted_text = g_strdup_printf ("\"%s\"", text);
+        g_free (text);
+        text = quoted_text;
+    }
+    return text;
+}
+
+/* --------------------------------------------------------------------------------------------- */
 
 static char *
 exec_get_export_variables (const vfs_path_t * filename_vpath)
@@ -155,12 +173,13 @@ exec_get_export_variables (const vfs_path_t * filename_vpath)
     {
         const char symbol;
         const char *name;
+        const gboolean is_result_quoted;
     } export_variables[] = {
-        {'p', "MC_EXT_BASENAME"},
-        {'d', "MC_EXT_CURRENTDIR"},
-        {'s', "MC_EXT_SELECTED"},
-        {'t', "MC_EXT_ONLYTAGGED"},
-        {'\0', NULL}
+        {'p', "MC_EXT_BASENAME", FALSE},
+        {'d', "MC_EXT_CURRENTDIR", FALSE},
+        {'s', "MC_EXT_SELECTED", TRUE},
+        {'t', "MC_EXT_ONLYTAGGED", TRUE},
+        {'\0', NULL, FALSE}
     };
     /* *INDENT-ON* */
 
@@ -174,7 +193,8 @@ exec_get_export_variables (const vfs_path_t * filename_vpath)
 
     for (i = 0; export_variables[i].name != NULL; i++)
     {
-        text = expand_format (NULL, export_variables[i].symbol, TRUE);
+        text =
+            exec_expand_format (export_variables[i].symbol, export_variables[i].is_result_quoted);
         if (text != NULL)
         {
             g_string_append_printf (export_vars_string,
@@ -207,7 +227,9 @@ exec_make_shell_string (const char *lc_data, const vfs_path_t * filename_vpath)
                 char *parameter;
 
                 parameter_found = FALSE;
-                parameter = input_dialog (_("Parameter"), lc_prompt, MC_HISTORY_EXT_PARAMETER, "");
+                parameter =
+                    input_dialog (_("Parameter"), lc_prompt, MC_HISTORY_EXT_PARAMETER, "",
+                                  INPUT_COMPLETE_NONE);
                 if (parameter == NULL)
                 {
                     /* User canceled */

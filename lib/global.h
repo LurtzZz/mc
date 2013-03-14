@@ -117,6 +117,10 @@
 #define BUF_SMALL 128
 #define BUF_TINY 64
 
+/* ESC_CHAR is defined in /usr/include/langinfo.h in some systems */
+#ifdef ESC_CHAR
+#undef ESC_CHAR
+#endif
 /* AIX compiler doesn't understand '\e' */
 #define ESC_CHAR '\033'
 #define ESC_STR  "\033"
@@ -239,6 +243,9 @@ typedef struct
         /* File descriptors of the pseudoterminal used by the subshell */
         int subshell_pty;
 #endif                          /* !ENABLE_SUBSHELL */
+
+        /* The user's shell */
+        char *shell;
 
         /* This flag is set by xterm detection routine in function main() */
         /* It is used by function view_other_cmd() */

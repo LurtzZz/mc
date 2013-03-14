@@ -226,7 +226,6 @@ dnl Check for functions
 dnl ############################################################################
 
 AC_CHECK_FUNCS([\
-	atoll \
 	isascii \
 	statfs sysconf \
 	tcgetattr tcsetattr \
@@ -644,7 +643,9 @@ tests/Makefile
 tests/lib/Makefile
 tests/lib/mcconfig/Makefile
 tests/lib/search/Makefile
+tests/lib/strutil/Makefile
 tests/lib/vfs/Makefile
+tests/lib/widget/Makefile
 tests/src/Makefile
 tests/src/filemanager/Makefile
 ])

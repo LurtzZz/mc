@@ -47,7 +47,7 @@
 #include "lib/mcconfig.h"
 #include "lib/vfs/vfs.h"
 #include "lib/unixcompat.h"
-#include "lib/timefmt.h"
+#include "lib/timefmt.h"        /* file_date() */
 #include "lib/util.h"
 #include "lib/widget.h"
 #ifdef HAVE_CHARSET
@@ -143,7 +143,7 @@ panel_field_t panel_fields[] = {
      /* TRANSLATORS: one single character to represent 'extension' sort mode  */
      /* TRANSLATORS: no need to translate 'sort', it's just a context prefix  */
      N_("sort|e"),
-     N_("&Extension"), TRUE, FALSE,
+     N_("E&xtension"), TRUE, FALSE,
      string_file_name,          /* TODO: string_file_ext */
      (sortfn *) sort_ext
     }
@@ -1295,8 +1295,7 @@ show_dir (WPanel * panel)
         tty_setcolor (REVERSE_COLOR);
 
     tmp = panel_correct_path_to_show (panel);
-    tty_printf (" %s ",
-                str_term_trim (tmp, min (max (w->cols - 12, 0), w->cols)));
+    tty_printf (" %s ", str_term_trim (tmp, min (max (w->cols - 12, 0), w->cols)));
     g_free (tmp);
 
     if (!panels_options.show_mini_info)
@@ -1848,9 +1847,9 @@ use_display_format (WPanel * panel, const char *format, char **error, int isstat
 
     /* Status needn't to be split */
     usable_columns = ((WIDGET (panel)->cols - 2) / ((isstatus)
-                                                  ? 1
-                                                  : (panel->split + 1))) - (!isstatus
-                                                                            && panel->split);
+                                                    ? 1
+                                                    : (panel->split + 1))) - (!isstatus
+                                                                              && panel->split);
 
     /* Look for the expandable fields and set field_len based on the requested field len */
     for (darr = home; darr && expand_top < MAX_EXPAND; darr = darr->next)
@@ -2498,7 +2497,7 @@ do_search (WPanel * panel, int c_code)
         unselect_item (panel);
         panel->selected = sel;
         select_item (panel);
-        send_message (WIDGET (panel), NULL, WIDGET_DRAW, 0, NULL);
+        widget_redraw (WIDGET (panel));
     }
     else if (c_code != KEY_BACKSPACE)
     {
@@ -3423,14 +3422,14 @@ panel_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void *d
 
     switch (msg)
     {
-    case WIDGET_INIT:
+    case MSG_INIT:
         /* subscribe to "history_load" event */
         mc_event_add (w->owner->event_group, MCEVENT_HISTORY_LOAD, panel_load_history, w, NULL);
         /* subscribe to "history_save" event */
         mc_event_add (w->owner->event_group, MCEVENT_HISTORY_SAVE, panel_save_history, w, NULL);
         return MSG_HANDLED;
 
-    case WIDGET_DRAW:
+    case MSG_DRAW:
         /* Repaint everything, including frame and separator */
         paint_frame (panel);    /* including show_dir */
         paint_dir (panel);
@@ -3439,7 +3438,7 @@ panel_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void *d
         panel->dirty = 0;
         return MSG_HANDLED;
 
-    case WIDGET_FOCUS:
+    case MSG_FOCUS:
         state_mark = -1;
         current_panel = panel;
         panel->active = 1;
@@ -3463,10 +3462,10 @@ panel_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void *d
 
         bb = find_buttonbar (w->owner);
         midnight_set_buttonbar (bb);
-        buttonbar_redraw (bb);
+        widget_redraw (WIDGET (bb));
         return MSG_HANDLED;
 
-    case WIDGET_UNFOCUS:
+    case MSG_UNFOCUS:
         /* Janne: look at this for the multiple panel options */
         stop_search (panel);
         panel->active = 0;
@@ -3474,13 +3473,13 @@ panel_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void *d
         unselect_item (panel);
         return MSG_HANDLED;
 
-    case WIDGET_KEY:
+    case MSG_KEY:
         return panel_key (panel, parm);
 
-    case WIDGET_COMMAND:
+    case MSG_ACTION:
         return panel_execute_cmd (panel, parm);
 
-    case WIDGET_DESTROY:
+    case MSG_DESTROY:
         /* unsubscribe from "history_load" event */
         mc_event_del (w->owner->event_group, MCEVENT_HISTORY_LOAD, panel_load_history, w);
         /* unsubscribe from "history_save" event */
@@ -3490,7 +3489,7 @@ panel_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void *d
         return MSG_HANDLED;
 
     default:
-        return default_widget_callback (sender, msg, parm, data);
+        return widget_default_callback (w, sender, msg, parm, data);
     }
 }
 
@@ -3643,7 +3642,7 @@ panel_event (Gpm_Event * event, void *data)
         /* "." button show/hide hidden files */
         if (mouse_down && local.x == w->cols - 5)
         {
-            midnight_dlg->callback (midnight_dlg, NULL, DLG_ACTION, CK_ShowHidden, NULL);
+            send_message (midnight_dlg, NULL, MSG_ACTION, CK_ShowHidden, NULL);
             goto finish;
         }
 
@@ -3719,7 +3718,7 @@ panel_event (Gpm_Event * event, void *data)
 
   finish:
     if (panel->dirty)
-        send_message (w, NULL, WIDGET_DRAW, 0, NULL);
+        widget_redraw (w);
 
     return MOU_NORMAL;
 }
@@ -4813,7 +4812,7 @@ do_cd (const vfs_path_t * new_dir_vpath, enum cd_enum exact)
         size_t new_vpath_len;
 
         new_vpath_len = vfs_path_len (new_dir_vpath);
-        if (vfs_path_ncmp (new_dir_vpath, panelized_panel.root_vpath, new_vpath_len) == 0)
+        if (vfs_path_equal_len (new_dir_vpath, panelized_panel.root_vpath, new_vpath_len))
             _new_dir_vpath = panelized_panel.root_vpath;
     }
 

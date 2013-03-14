@@ -55,17 +55,17 @@
 static cb_ret_t
 groupbox_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void *data)
 {
-    WGroupbox *g = (WGroupbox *) w;
+    WGroupbox *g = GROUPBOX (w);
 
     switch (msg)
     {
-    case WIDGET_INIT:
+    case MSG_INIT:
         return MSG_HANDLED;
 
-    case WIDGET_FOCUS:
+    case MSG_FOCUS:
         return MSG_NOT_HANDLED;
 
-    case WIDGET_DRAW:
+    case MSG_DRAW:
         {
             Widget *wo = WIDGET (w->owner);
 
@@ -82,12 +82,12 @@ groupbox_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void
             return MSG_HANDLED;
         }
 
-    case WIDGET_DESTROY:
+    case MSG_DESTROY:
         g_free (g->title);
         return MSG_HANDLED;
 
     default:
-        return default_widget_callback (sender, msg, parm, data);
+        return widget_default_callback (w, sender, msg, parm, data);
     }
 }
 
@@ -108,8 +108,22 @@ groupbox_new (int y, int x, int height, int width, const char *title)
     widget_want_cursor (w, FALSE);
     widget_want_hotkey (w, FALSE);
 
+    g->title = NULL;
+    groupbox_set_title (g, title);
+
+    return g;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+void
+groupbox_set_title (WGroupbox * g, const char *title)
+{
+    g_free (g->title);
+    g->title = NULL;
+
     /* Strip existing spaces, add one space before and after the title */
-    if (title != NULL)
+    if (title != NULL && *title != '\0')
     {
         char *t;
 
@@ -118,7 +132,7 @@ groupbox_new (int y, int x, int height, int width, const char *title)
         g_free (t);
     }
 
-    return g;
+    widget_redraw (WIDGET (g));
 }
 
 /* --------------------------------------------------------------------------------------------- */

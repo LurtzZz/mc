@@ -64,7 +64,6 @@
 #include "lib/keybind.h"
 #include "lib/event.h"
 
-#include "option.h"             /* configure_box() */
 #include "tree.h"
 #include "boxes.h"              /* sort_box(), tree_box() */
 #include "layout.h"
@@ -115,6 +114,9 @@ WLabel *the_hint;
 /* The button bar */
 WButtonBar *the_bar;
 
+/* The prompt */
+const char *mc_prompt = NULL;
+
 /*** file scope macro definitions ****************************************************************/
 
 #ifdef HAVE_CHARSET
@@ -128,7 +130,7 @@ WButtonBar *the_bar;
 
 /*** file scope variables ************************************************************************/
 
-static Menu *left_menu, *right_menu;
+static menu_t *left_menu, *right_menu;
 
 static gboolean ctl_x_map_enabled = FALSE;
 
@@ -142,7 +144,7 @@ stop_dialogs (void)
     midnight_dlg->state = DLG_CLOSED;
 
     if ((top_dlg != NULL) && (top_dlg->data != NULL))
-        ((Dlg_head *) top_dlg->data)->state = DLG_CLOSED;
+        DIALOG (top_dlg->data)->state = DLG_CLOSED;
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -432,7 +434,7 @@ midnight_get_shortcut (unsigned long command)
 /* --------------------------------------------------------------------------------------------- */
 
 static char *
-midnight_get_title (const Dlg_head * h, size_t len)
+midnight_get_title (const WDialog * h, size_t len)
 {
     char *path;
     char *login;
@@ -896,6 +898,7 @@ setup_dummy_mc (void)
     setup_mc ();
     vpath = vfs_path_from_str (d);
     ret = mc_chdir (vpath);
+    (void) ret;
     vfs_path_free (vpath);
     g_free (d);
 }
@@ -1094,10 +1097,10 @@ static void
 update_dirty_panels (void)
 {
     if (get_current_type () == view_listing && current_panel->dirty)
-        send_message (WIDGET (current_panel), NULL, WIDGET_DRAW, 0, NULL);
+        widget_redraw (WIDGET (current_panel));
 
     if (get_other_type () == view_listing && other_panel->dirty)
-        send_message (WIDGET (other_panel), NULL, WIDGET_DRAW, 0, NULL);
+        widget_redraw (WIDGET (other_panel));
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -1110,7 +1113,7 @@ midnight_execute_cmd (Widget * sender, unsigned long command)
     (void) sender;
 
     /* stop quick search before executing any command */
-    send_message (WIDGET (current_panel), NULL, WIDGET_COMMAND, CK_SearchStop, NULL);
+    send_message (current_panel, NULL, MSG_ACTION, CK_SearchStop, NULL);
 
     switch (command)
     {
@@ -1238,7 +1241,7 @@ midnight_execute_cmd (Widget * sender, unsigned long command)
         break;
     case CK_History:
         /* show the history of command line widget */
-        send_message (WIDGET (cmdline), NULL, WIDGET_COMMAND, CK_History, NULL);
+        send_message (cmdline, NULL, MSG_ACTION, CK_History, NULL);
         break;
     case CK_PanelInfo:
         if (sender == WIDGET (the_menubar))
@@ -1401,18 +1404,18 @@ midnight_execute_cmd (Widget * sender, unsigned long command)
 /* --------------------------------------------------------------------------------------------- */
 
 static cb_ret_t
-midnight_callback (Dlg_head * h, Widget * sender, dlg_msg_t msg, int parm, void *data)
+midnight_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void *data)
 {
     unsigned long command;
 
     switch (msg)
     {
-    case DLG_INIT:
+    case MSG_INIT:
         panel_init ();
         setup_panels ();
         return MSG_HANDLED;
 
-    case DLG_DRAW:
+    case MSG_DRAW:
         load_hint (1);
         /* We handle the special case of the output lines */
         if (mc_global.tty.console_flag != '\0' && output_lines)
@@ -1421,14 +1424,14 @@ midnight_callback (Dlg_head * h, Widget * sender, dlg_msg_t msg, int parm, void 
                                    1, LINES - mc_global.keybar_visible - 1);
         return MSG_HANDLED;
 
-    case DLG_RESIZE:
+    case MSG_RESIZE:
         setup_panels ();
         menubar_arrange (the_menubar);
         return MSG_HANDLED;
 
-    case DLG_IDLE:
+    case MSG_IDLE:
         /* We only need the first idle event to show user menu after start */
-        set_idle_proc (h, 0);
+        widget_want_idle (w, FALSE);
 
         if (boot_current_is_left)
             dlg_select_widget (get_panel_widget (0));
@@ -1439,7 +1442,7 @@ midnight_callback (Dlg_head * h, Widget * sender, dlg_msg_t msg, int parm, void 
             midnight_execute_cmd (NULL, CK_UserMenu);
         return MSG_HANDLED;
 
-    case DLG_KEY:
+    case MSG_KEY:
         if (ctl_x_map_enabled)
         {
             ctl_x_map_enabled = FALSE;
@@ -1465,7 +1468,7 @@ midnight_callback (Dlg_head * h, Widget * sender, dlg_msg_t msg, int parm, void 
 
             if (cmdline->buffer[i] != '\0')
             {
-                send_message (WIDGET (cmdline), NULL, WIDGET_KEY, parm, NULL);
+                send_message (cmdline, NULL, MSG_KEY, parm, NULL);
                 return MSG_HANDLED;
             }
 
@@ -1540,15 +1543,15 @@ midnight_callback (Dlg_head * h, Widget * sender, dlg_msg_t msg, int parm, void 
         }
         return MSG_NOT_HANDLED;
 
-    case DLG_HOTKEY_HANDLED:
+    case MSG_HOTKEY_HANDLED:
         if ((get_current_type () == view_listing) && current_panel->searching)
         {
             current_panel->dirty = 1;   /* FIXME: unneeded? */
-            send_message (WIDGET (current_panel), NULL, WIDGET_COMMAND, CK_SearchStop, NULL);
+            send_message (current_panel, NULL, MSG_ACTION, CK_SearchStop, NULL);
         }
         return MSG_HANDLED;
 
-    case DLG_UNHANDLED_KEY:
+    case MSG_UNHANDLED_KEY:
         {
             cb_ret_t v = MSG_NOT_HANDLED;
 
@@ -1564,17 +1567,17 @@ midnight_callback (Dlg_head * h, Widget * sender, dlg_msg_t msg, int parm, void 
                 v = midnight_execute_cmd (NULL, command);
 
             if (v == MSG_NOT_HANDLED && command_prompt)
-                v = send_message (WIDGET (cmdline), NULL, WIDGET_KEY, parm, NULL);
+                v = send_message (cmdline, NULL, MSG_KEY, parm, NULL);
 
             return v;
         }
 
-    case DLG_POST_KEY:
+    case MSG_POST_KEY:
         if (!the_menubar->is_active)
             update_dirty_panels ();
         return MSG_HANDLED;
 
-    case DLG_ACTION:
+    case MSG_ACTION:
         /* shortcut */
         if (sender == NULL)
             return midnight_execute_cmd (NULL, parm);
@@ -1585,17 +1588,17 @@ midnight_callback (Dlg_head * h, Widget * sender, dlg_msg_t msg, int parm, void 
         if (sender == WIDGET (the_bar))
         {
             if (data != NULL)
-                return send_message (WIDGET (data), NULL, WIDGET_COMMAND, parm, NULL);
+                return send_message (data, NULL, MSG_ACTION, parm, NULL);
             return midnight_execute_cmd (sender, parm);
         }
         return MSG_NOT_HANDLED;
 
-    case DLG_END:
+    case MSG_END:
         panel_deinit ();
         return MSG_HANDLED;
 
     default:
-        return default_dlg_callback (h, sender, msg, parm, data);
+        return dlg_default_callback (w, sender, msg, parm, data);
     }
 }
 
@@ -1757,7 +1760,7 @@ do_nc (void)
 #endif
 
     midnight_dlg = create_dlg (FALSE, 0, 0, LINES, COLS, midnight_colors, midnight_callback,
-                               midnight_event, "[main]", NULL, DLG_WANT_IDLE);
+                               midnight_event, "[main]", NULL, DLG_NONE);
 
     /* Check if we were invoked as an editor or file viewer */
     if (mc_global.mc_run_mode != MC_RUN_FULL)
@@ -1767,6 +1770,9 @@ do_nc (void)
     }
     else
     {
+        /* We only need the first idle event to show user menu after start */
+        widget_want_idle (WIDGET (midnight_dlg), TRUE);
+
         setup_mc ();
         mc_filehighlight = mc_fhl_new (TRUE);
         create_panels_and_run_mc ();
