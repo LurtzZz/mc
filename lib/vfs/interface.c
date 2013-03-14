@@ -320,8 +320,8 @@ int mc_##name (const vfs_path_t *vpath1, const vfs_path_t *vpath2) \
     if (vpath1 == NULL || vpath2 == NULL) \
         return -1; \
 \
-    path_element1 = vfs_path_get_by_index (vpath1, - 1); \
-    path_element2 = vfs_path_get_by_index (vpath2, - 1); \
+    path_element1 = vfs_path_get_by_index (vpath1, (-1)); \
+    path_element2 = vfs_path_get_by_index (vpath2, (-1)); \
 \
     if (!vfs_path_element_valid (path_element1) || !vfs_path_element_valid (path_element2) || \
         path_element1->class != path_element2->class) \
@@ -457,9 +457,6 @@ mc_readdir (DIR * dirp)
     struct vfs_class *vfs;
     struct dirent *entry = NULL;
     vfs_path_element_t *vfs_path_element;
-#ifdef HAVE_CHARSET
-    estr_t state;
-#endif
 
     if (!mc_readdir_result)
     {
@@ -496,8 +493,7 @@ mc_readdir (DIR * dirp)
 
         g_string_set_size (vfs_str_buffer, 0);
 #ifdef HAVE_CHARSET
-        state =
-            str_vfs_convert_from (vfs_path_element->dir.converter, entry->d_name, vfs_str_buffer);
+        str_vfs_convert_from (vfs_path_element->dir.converter, entry->d_name, vfs_str_buffer);
 #else
         g_string_assign (vfs_str_buffer, entry->d_name);
 #endif

@@ -73,7 +73,7 @@ static struct my_statfs myfs_stats;
 /* --------------------------------------------------------------------------------------------- */
 
 static void
-info_box (WInfo *info)
+info_box (WInfo * info)
 {
     Widget *w = WIDGET (info);
 
@@ -98,7 +98,7 @@ info_box (WInfo *info)
 /* --------------------------------------------------------------------------------------------- */
 
 static void
-info_show_info (WInfo *info)
+info_show_info (WInfo * info)
 {
     Widget *w = WIDGET (info);
     static int i18n_adjust = 0;
@@ -185,8 +185,7 @@ info_show_info (WInfo *info)
 
     case 13:
         widget_move (w, 13, 3);
-        str_printf (buff, _("Device:    %s"),
-                    str_trunc (myfs_stats.device, w->cols - i18n_adjust));
+        str_printf (buff, _("Device:    %s"), str_trunc (myfs_stats.device, w->cols - i18n_adjust));
         tty_print_string (buff->str);
         g_string_set_size (buff, 0);
     case 12:
@@ -292,31 +291,28 @@ info_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void *da
 {
     struct WInfo *info = (struct WInfo *) w;
 
-    (void) sender;
-    (void) data;
-
     switch (msg)
     {
-    case WIDGET_INIT:
+    case MSG_INIT:
         init_my_statfs ();
         add_hook (&select_file_hook, info_hook, info);
         info->ready = 0;
         return MSG_HANDLED;
 
-    case WIDGET_DRAW:
+    case MSG_DRAW:
         info_hook (info);
         return MSG_HANDLED;
 
-    case WIDGET_FOCUS:
+    case MSG_FOCUS:
         return MSG_NOT_HANDLED;
 
-    case WIDGET_DESTROY:
+    case MSG_DESTROY:
         delete_hook (&select_file_hook, info_hook);
         free_my_statfs ();
         return MSG_HANDLED;
 
     default:
-        return default_widget_callback (sender, msg, parm, data);
+        return widget_default_callback (w, sender, msg, parm, data);
     }
 }
 

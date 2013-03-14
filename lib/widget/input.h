@@ -10,6 +10,8 @@
 
 /*** typedefs(not structures) and defined constants **********************************************/
 
+#define INPUT(x) ((WInput *)(x))
+
 /* For history load-save functions */
 #define INPUT_LAST_TEXT ((char *) 2)
 
@@ -27,6 +29,7 @@ typedef enum
 /* completion flags */
 typedef enum
 {
+    INPUT_COMPLETE_NONE = 0,
     INPUT_COMPLETE_FILENAMES = 1 << 0,
     INPUT_COMPLETE_HOSTNAMES = 1 << 1,
     INPUT_COMPLETE_COMMANDS = 1 << 2,
@@ -34,9 +37,6 @@ typedef enum
     INPUT_COMPLETE_USERNAMES = 1 << 4,
     INPUT_COMPLETE_CD = 1 << 5,
     INPUT_COMPLETE_SHELL_ESC = 1 << 6,
-
-    INPUT_COMPLETE_DEFAULT = INPUT_COMPLETE_FILENAMES
-        | INPUT_COMPLETE_HOSTNAMES | INPUT_COMPLETE_VARIABLES | INPUT_COMPLETE_USERNAMES
 } input_complete_t;
 
 /*** structures declarations (and typedefs of structures)*****************************************/
@@ -68,7 +68,7 @@ typedef struct
     input_complete_t completion_flags;
     char charbuf[MB_LEN_MAX];   /* buffer for multibytes characters */
     size_t charpoint;           /* point to end of mulibyte sequence in charbuf */
-    WLabel *label;              /* label associated with this input line*/
+    WLabel *label;              /* label associated with this input line */
 } WInput;
 
 /*** global variables defined in .c file *********************************************************/

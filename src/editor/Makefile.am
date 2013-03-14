@@ -7,11 +7,19 @@ noinst_LTLIBRARIES =
 endif
 
 libedit_la_SOURCES = \
-	bookmark.c edit.c editcmd.c editwidget.c editwidget.h \
-	editdraw.c editkeys.c \
-	editmenu.c editoptions.c edit-impl.h edit.h \
-	syntax.c wordproc.c \
-	choosesyntax.c etags.c etags.h editcmd_dialogs.c editcmd_dialogs.h
+	bookmark.c \
+	choosesyntax.c \
+	edit.c edit.h \
+	edit-impl.h \
+	editcmd.c \
+	editcmd_dialogs.c editcmd_dialogs.h \
+	editdraw.c \
+	editmenu.c \
+	editoptions.c \
+	editwidget.c editwidget.h \
+	etags.c etags.h \
+	syntax.c \
+	wordproc.c
 
 if USE_ASPELL
 if HAVE_GMODULE
@@ -21,4 +29,4 @@ libedit_la_SOURCES += \
 endif
 endif
 
-AM_CFLAGS = $(GLIB_CFLAGS) -I$(top_srcdir) $(PCRE_CFLAGS)
+AM_CPPFLAGS = $(GLIB_CFLAGS) -I$(top_srcdir) $(PCRE_CPPFLAGS)

@@ -250,7 +250,7 @@ tree_show_mini_info (WTree * tree, int tree_lines, int tree_cols)
     else
     {
         /* Show full name of selected directory */
-        Dlg_head *h = w->owner;
+        WDialog *h = w->owner;
         char *tmp_path;
 
         tty_setcolor (tree->is_panel ? NORMAL_COLOR : TREE_NORMALC (h));
@@ -268,7 +268,7 @@ static void
 show_tree (WTree * tree)
 {
     Widget *w = WIDGET (tree);
-    Dlg_head *h = w->owner;
+    WDialog *h = w->owner;
     tree_entry *current;
     int i, j, topsublevel;
     int x = 0, y = 0;
@@ -314,13 +314,13 @@ show_tree (WTree * tree)
 
             if (current->sublevel < tree->selected_ptr->sublevel)
             {
-                if (vfs_path_cmp (current->name, tree->selected_ptr->name) == 0)
+                if (vfs_path_equal (current->name, tree->selected_ptr->name))
                     i++;
             }
             else if (current->sublevel == tree->selected_ptr->sublevel)
             {
                 for (j = strlen (current_name) - 1; current_name[j] != PATH_SEP; j--);
-                if (vfs_path_ncmp (current->name, tree->selected_ptr->name, j) == 0)
+                if (vfs_path_equal_len (current->name, tree->selected_ptr->name, j))
                     i++;
             }
             else
@@ -328,8 +328,8 @@ show_tree (WTree * tree)
                 if (current->sublevel == tree->selected_ptr->sublevel + 1
                     && vfs_path_len (tree->selected_ptr->name) > 1)
                 {
-                    if (vfs_path_ncmp (current->name, tree->selected_ptr->name,
-                                       vfs_path_len (tree->selected_ptr->name)) == 0)
+                    if (vfs_path_equal_len (current->name, tree->selected_ptr->name,
+                                            vfs_path_len (tree->selected_ptr->name)))
                         i++;
                 }
             }
@@ -406,8 +406,8 @@ show_tree (WTree * tree)
             {
                 if (current->sublevel < tree->selected_ptr->sublevel)
                 {
-                    if (vfs_path_ncmp (current->name, tree->selected_ptr->name,
-                                       vfs_path_len (current->name)) == 0)
+                    if (vfs_path_equal_len (current->name, tree->selected_ptr->name,
+                                            vfs_path_len (current->name)))
                         break;
                 }
                 else if (current->sublevel == tree->selected_ptr->sublevel)
@@ -418,14 +418,14 @@ show_tree (WTree * tree)
                     for (j = strlen (current_name) - 1; current_name[j] != PATH_SEP; j--)
                         ;
                     g_free (current_name);
-                    if (vfs_path_ncmp (current->name, tree->selected_ptr->name, j) == 0)
+                    if (vfs_path_equal_len (current->name, tree->selected_ptr->name, j))
                         break;
                 }
                 else if (current->sublevel == tree->selected_ptr->sublevel + 1
                          && vfs_path_len (tree->selected_ptr->name) > 1)
                 {
-                    if (vfs_path_ncmp (current->name, tree->selected_ptr->name,
-                                       vfs_path_len (tree->selected_ptr->name)) == 0)
+                    if (vfs_path_equal_len (current->name, tree->selected_ptr->name,
+                                            vfs_path_len (tree->selected_ptr->name)))
                         break;
                 }
                 current = current->next;
@@ -742,7 +742,6 @@ static void
 tree_rescan (void *data)
 {
     WTree *tree = data;
-    int ret;
     vfs_path_t *old_vpath;
 
     old_vpath = vfs_path_clone (vfs_get_raw_current_dir ());
@@ -751,8 +750,11 @@ tree_rescan (void *data)
 
     if (tree->selected_ptr != NULL && mc_chdir (tree->selected_ptr->name) == 0)
     {
+        int ret;
+
         tree_store_rescan (tree->selected_ptr->name);
         ret = mc_chdir (old_vpath);
+        (void) ret;
     }
     vfs_path_free (old_vpath);
 }
@@ -783,7 +785,8 @@ tree_copy (WTree * tree, const char *default_dest)
     g_snprintf (msg, sizeof (msg), _("Copy \"%s\" directory to:"),
                 str_trunc (selected_ptr_name, 50));
     dest = input_expand_dialog (Q_ ("DialogTitle|Copy"),
-                                msg, MC_HISTORY_FM_TREE_COPY, default_dest);
+                                msg, MC_HISTORY_FM_TREE_COPY, default_dest,
+                                INPUT_COMPLETE_FILENAMES | INPUT_COMPLETE_CD);
 
     if (dest != NULL && *dest != '\0')
     {
@@ -822,7 +825,8 @@ tree_move (WTree * tree, const char *default_dest)
     g_snprintf (msg, sizeof (msg), _("Move \"%s\" directory to:"),
                 str_trunc (selected_ptr_name, 50));
     dest =
-        input_expand_dialog (Q_ ("DialogTitle|Move"), msg, MC_HISTORY_FM_TREE_MOVE, default_dest);
+        input_expand_dialog (Q_ ("DialogTitle|Move"), msg, MC_HISTORY_FM_TREE_MOVE, default_dest,
+                             INPUT_COMPLETE_FILENAMES | INPUT_COMPLETE_CD);
 
     if (dest == NULL || *dest == '\0')
         goto ret;
@@ -1175,7 +1179,7 @@ tree_key (WTree * tree, int key)
 /* --------------------------------------------------------------------------------------------- */
 
 static void
-tree_frame (Dlg_head * h, WTree * tree)
+tree_frame (WDialog * h, WTree * tree)
 {
     Widget *w = WIDGET (tree);
 
@@ -1206,17 +1210,17 @@ static cb_ret_t
 tree_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void *data)
 {
     WTree *tree = (WTree *) w;
-    Dlg_head *h = w->owner;
+    WDialog *h = w->owner;
     WButtonBar *b = find_buttonbar (h);
 
     switch (msg)
     {
-    case WIDGET_DRAW:
+    case MSG_DRAW:
         tree_frame (h, tree);
         show_tree (tree);
         return MSG_HANDLED;
 
-    case WIDGET_FOCUS:
+    case MSG_FOCUS:
         tree->active = 1;
         buttonbar_set_label (b, 1, Q_ ("ButtonBar|Help"), tree_map, w);
         buttonbar_set_label (b, 2, Q_ ("ButtonBar|Rescan"), tree_map, w);
@@ -1232,7 +1236,7 @@ tree_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void *da
         buttonbar_clear_label (b, 7, WIDGET (tree));
 #endif
         buttonbar_set_label (b, 8, Q_ ("ButtonBar|Rmdir"), tree_map, w);
-        buttonbar_redraw (b);
+        widget_redraw (WIDGET (b));
 
         /* FIXME: Should find a better way of only displaying the
            currently selected item */
@@ -1242,25 +1246,25 @@ tree_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void *da
         /* FIXME: Should find a better way of changing the color of the
            selected item */
 
-    case WIDGET_UNFOCUS:
+    case MSG_UNFOCUS:
         tree->active = 0;
         tree->searching = 0;
         show_tree (tree);
         return MSG_HANDLED;
 
-    case WIDGET_KEY:
+    case MSG_KEY:
         return tree_key (tree, parm);
 
-    case WIDGET_COMMAND:
+    case MSG_ACTION:
         /* command from buttonbar */
         return tree_execute_cmd (tree, parm);
 
-    case WIDGET_DESTROY:
+    case MSG_DESTROY:
         tree_destroy (tree);
         return MSG_HANDLED;
 
     default:
-        return default_widget_callback (sender, msg, parm, data);
+        return widget_default_callback (w, sender, msg, parm, data);
     }
 }
 
@@ -1333,7 +1337,7 @@ sync_tree (const char *path)
 /* --------------------------------------------------------------------------------------------- */
 
 WTree *
-find_tree (struct Dlg_head *h)
+find_tree (struct WDialog *h)
 {
     return (WTree *) find_widget_type (h, tree_callback);
 }
